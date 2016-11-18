@@ -46,6 +46,7 @@ public class Board
 		return false;
 	}
 	
+<<<<<<< HEAD
 	public void printBox()
 	{
 		for(int i = 0; i < 9; i++)
@@ -54,4 +55,7 @@ public class Board
 			}
 			
 	}
+=======
+	// hi, my name is nathan
+>>>>>>> e995538fcb0be4467a958aa20c05c371136f5b53
 }
