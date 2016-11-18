@@ -40,4 +40,6 @@ public class Board
 				return true;
 		return false;
 	}
+	
+	// hi, my name is nathan
 }
