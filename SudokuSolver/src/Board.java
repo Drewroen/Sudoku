@@ -20,6 +20,16 @@ public class Board
 		boardArray[i][j] = num;
 	}
 	
+	public boolean placeNumberWithCheck(int i, int j, int num)
+	{
+		if(!checkNumRow(i, num) && !checkNumColumn(j, num) && !checkNumBox(i, j, num))
+		{
+			boardArray[i][j] = num;
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean checkNumber(int i, int j)
 	{
 		return boardArray[i][j] != 0;
@@ -30,7 +40,7 @@ public class Board
 		return boardArray[i][j];
 	}
 	
-	public boolean checkRow(int i, int num)
+	public boolean checkNumRow(int i, int num)
 	{
 		for(int j = 0; j < 9; j++)
 			if (boardArray[i][j] == num)
@@ -38,11 +48,21 @@ public class Board
 		return false;
 	}
 	
-	public boolean checkColumn(int j, int num)
+	public boolean checkNumColumn(int j, int num)
 	{
 		for(int i = 0; i < 9; i++)
 			if (boardArray[i][j] == num)
 				return true;
+		return false;
+	}
+	
+	public boolean checkNumBox(int i, int j, int num)
+	{
+		for(int k = 0; k < 9; k++)
+			for(int l = 0; l < 9; l++)
+				if(boxArray[k][l] == boxArray[i][j])
+					if(boardArray[k][l] == num)
+						return true;
 		return false;
 	}
 
@@ -64,5 +84,22 @@ public class Board
 				System.out.print(boxArray[i][j] + " ");
 			System.out.println();
 		}
+	}
+	
+	public boolean confirmBoxSize()
+	{
+		int[] temp = new int[9];
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				temp[boxArray[i][j]-1]++;
+		for(int i: temp)
+			if (i != 9)
+				return false;
+		return true;
+	}
+	
+	public void changeBoxRegion(int i, int j, int box)
+	{
+		boxArray[i][j] = box;
 	}
 }
