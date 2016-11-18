@@ -1,6 +1,7 @@
 public class Board
 {
-	private int boardArray[][];
+	private int[][] boardArray;
+	private int[][] boxArray;
 	
 	public Board()
 	{
@@ -8,6 +9,10 @@ public class Board
 		for(int i = 0; i < 9; i++)
 			for(int j = 0; j < 9; j++)
 				boardArray[i][j] = 0;
+		boxArray = new int[9][9];
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				boxArray[i][j] = (i/3) + (3*(j/3)) + 1;
 	}
 	
 	public void placeNumber(int i, int j, int num)
@@ -39,5 +44,14 @@ public class Board
 			if (boardArray[i][j] == num)
 				return true;
 		return false;
+	}
+	
+	public void printBox()
+	{
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+			{
+			}
+			
 	}
 }
