@@ -1,7 +1,8 @@
-public class Board
+public class Board implements Cloneable
 {
 	private int[][] boardArray;
 	private int[][] boxArray;
+	private boolean[][][] potentialArray;
 	
 	public Board()
 	{
@@ -13,16 +14,50 @@ public class Board
 		for(int i = 0; i < 9; i++)
 			for(int j = 0; j < 9; j++)
 				boxArray[i][j] = (3*(i/3)) + (j/3) + 1;
+		potentialArray = new boolean[9][9][9];
+		for(int i = 0; i < 9; i ++)
+			for(int j = 0; j < 9; j++)
+				for(int k = 0; k < 9; k++)
+					potentialArray[i][j][k] = true;
+	}
+	
+	public Board(int[][] board, int[][] box, boolean[][][] potential)
+	{
+		boardArray = board;
+		boxArray = box;
+		potentialArray = potential;
+	}
+	
+	public Board(Board b)
+	{
+		boardArray = b.boardArray;
+		boxArray = b.boxArray;
+		potentialArray = b.potentialArray;
 	}
 	
 	public void placeNumber(int i, int j, int num)
 	{
 		boardArray[i][j] = num;
+		for(int k = 0; k < 9; k++)
+			potentialArray[i][j][k] = false;
+	}
+	
+	public void setPotential(int i, int j, int k, boolean l)
+	{
+		potentialArray[i][j][k - 1] = l;
+	}
+	
+	public boolean noPotential(int i, int j)
+	{
+		for(int k = 0; k < 9; k++)
+			if(potentialArray[i][j][k] == true)
+				return false;
+		return true;
 	}
 	
 	public boolean canAddNumber(int i, int j, int num)
 	{
-		if(!checkNumRow(i, num) && !checkNumColumn(j, num) && !checkNumBox(i, j, num))
+		if(!checkNumRow(i, num) && !checkNumColumn(j, num) && !checkNumBox(i, j, num) && potentialArray[i][j][num-1])
 		{
 			return true;
 		}
@@ -138,4 +173,49 @@ public class Board
 		return true;
 	}
 	
+	public int[][] getBoardArray()
+	{
+		return boardArray.clone();
+	}
+	
+	public int[][] getBoxArray()
+	{
+		return boxArray.clone();
+	}
+	
+	public Board clone()
+	{
+		int[][] boardArrayNew = new int[9][9];
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				boardArrayNew[i][j] = boardArray[i][j];
+		int[][] boxArrayNew = new int[9][9];
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				boxArrayNew[i][j] = boxArray[i][j];
+		boolean[][][] potentialArrayNew = new boolean[9][9][9];
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				for(int k = 0; k < 9; k++)
+					potentialArrayNew[i][j][k] = potentialArray[i][j][k];
+		return new Board(boardArrayNew, boxArrayNew, potentialArrayNew);
+	}
+	
+	public boolean equals(Board a)
+	{
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				if (a.boardArray[i][j] != boardArray[i][j])
+					return false;
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				if (a.boxArray[i][j] != boxArray[i][j])
+					return false;
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				for(int k = 0; k < 9; k++)
+					if	(a.potentialArray[i][j][k] != potentialArray[i][j][k])
+						return false;
+		return true;
+	}
 }
