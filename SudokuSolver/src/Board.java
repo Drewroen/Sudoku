@@ -6,14 +6,17 @@ public class Board implements Cloneable
 	
 	public Board()
 	{
+		// board itself
 		boardArray = new int[9][9];
 		for(int i = 0; i < 9; i++)
 			for(int j = 0; j < 9; j++)
 				boardArray[i][j] = 0;
+		// regions
 		boxArray = new int[9][9];
 		for(int i = 0; i < 9; i++)
 			for(int j = 0; j < 9; j++)
 				boxArray[i][j] = (3*(i/3)) + (j/3) + 1;
+		
 		potentialArray = new boolean[9][9][9];
 		for(int i = 0; i < 9; i ++)
 			for(int j = 0; j < 9; j++)
