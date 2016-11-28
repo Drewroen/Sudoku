@@ -218,4 +218,33 @@ public class Board implements Cloneable
 						return false;
 		return true;
 	}
+	
+	public void solve(int row, int column) throws Exception
+	{
+		if(row > 8)
+			throw new Exception();
+
+		if(boardArray[row][column] != 0)
+		{
+			if(column < 8)
+				solve(row, column + 1);
+			else
+				solve(row + 1, 0);
+		}
+		else
+		{
+			for(int i = 0; i < 9; i++)
+			{
+				if(!checkNumRow(row, i + 1) && !checkNumColumn(column, i + 1) && !checkNumBox(row,column, i + 1))
+				{
+					boardArray[row][column] = i + 1;
+					if(column < 8)
+						solve(row, column + 1);
+					else
+						solve(row + 1, 0);
+				}
+			}
+			boardArray[row][column] = 0;
+		}
+	}
 }
