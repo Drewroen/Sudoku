@@ -1,4 +1,4 @@
-public class Board implements Cloneable
+public class Board
 {
 	private int[][] boardArray;
 	private int[][] boxArray;
