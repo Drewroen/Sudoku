@@ -7,29 +7,51 @@ public class SudokuSolver {
 
 	public static void main(String[] args)
 	{
+		Board b = new Board();
+		JFrame main = new JFrame("Irregular Sudoku Solver");
+		main.setLayout(new BorderLayout());
+		JComponent board = new JPanel(new GridLayout(9, 9));
+		JComponent numbers = new JPanel(new GridLayout(2, 9));
 		
-		JFrame frame = new JFrame("Irregular Sudoku Solver");
-		frame.setLayout(new GridLayout(3, 3));
-		JComponent box1 = new JPanel(new GridLayout(3, 3));
+		numbers.add(new InputBox("1"));
+		numbers.add(new InputBox("2"));
+		numbers.add(new InputBox("3"));
+		numbers.add(new InputBox("4"));
+		numbers.add(new InputBox("5"));
+		numbers.add(new InputBox("6"));
+		numbers.add(new InputBox("7"));
+		numbers.add(new InputBox("8"));
+		numbers.add(new InputBox("9"));
+		numbers.add(new InputBox("A"));
+		numbers.add(new InputBox("B"));
+		numbers.add(new InputBox("C"));
+		numbers.add(new InputBox("D"));
+		numbers.add(new InputBox("E"));
+		numbers.add(new InputBox("F"));
+		numbers.add(new InputBox("G"));
+		numbers.add(new InputBox("H"));
+		numbers.add(new InputBox("I"));
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(1000, 1000));
+		numbers.setPreferredSize(new Dimension(270, 90));
+		
+		main.pack();
+		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		board.setPreferredSize(new Dimension(400, 420));
 		
 		for(int i = 0; i < 9; i++)
 		{
-			JComponent box = new JPanel(new GridLayout(3, 3));
 			for(int j = 0; j < 9; j++)
-				box.add(new Box());
-			frame.add(box);
+				board.add(new Box(i, j, b));
 		}
 
+		main.add(board);
+		main.add(numbers, BorderLayout.SOUTH);
+		
+		main.pack();
+		
+		main.setVisible(true);
 		
 		
-		frame.pack();
-		
-		frame.setVisible(true);
-		
-		Board b = new Board();
 		b.placeNumber(0, 1, 5);
 		b.placeNumber(0, 2, 3);
 		b.placeNumber(0, 5, 9);
@@ -101,13 +123,62 @@ public class SudokuSolver {
 	}
 }
 
-class Box extends JPanel{ 
-    BufferedImage image;
+class Box extends JPanel
+{ 
+    private int x;
+    private int y;
+    private Board b;
+    
+    public Box(int x, int y, Board b)
+    {
+    	this.x = x;
+    	this.y = y;
+    	this.b = b;
+    }
+    
     public void paintComponent(Graphics g)
     {
     	g.drawLine(0 + 2, 0 + 2, 0 + 2, this.getHeight() - 2);
     	g.drawLine(0 + 2, 0 + 2, this.getWidth() - 2, 0 + 2);
     	g.drawLine(this.getWidth() - 2, 0 + 2, this.getWidth() - 2, this.getHeight() - 2);
     	g.drawLine(0 + 2, this.getHeight() - 2, this.getWidth() - 2, this.getHeight() - 2);
+    	
+    	if(b.getNumber(x, y) == 1)
+    		g.drawString("1", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 2)
+    		g.drawString("2", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 3)
+    		g.drawString("3", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 4)
+    		g.drawString("4", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 5)
+    		g.drawString("5", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 6)
+    		g.drawString("6", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 7)
+    		g.drawString("7", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 8)
+    		g.drawString("8", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	else if(b.getNumber(x, y) == 9)
+    		g.drawString("9", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    }
+}
+
+class InputBox extends JPanel
+{
+    private String x;
+    
+    public InputBox(String x)
+    {
+    	this.x = x;
+    }
+    
+    public void paintComponent(Graphics g)
+    {
+    	g.drawLine(0 + 2, 0 + 2, 0 + 2, this.getHeight() - 2);
+    	g.drawLine(0 + 2, 0 + 2, this.getWidth() - 2, 0 + 2);
+    	g.drawLine(this.getWidth() - 2, 0 + 2, this.getWidth() - 2, this.getHeight() - 2);
+    	g.drawLine(0 + 2, this.getHeight() - 2, this.getWidth() - 2, this.getHeight() - 2);
+    	g.drawString(x, (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
     }
 }
