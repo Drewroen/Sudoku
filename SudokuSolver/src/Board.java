@@ -68,7 +68,7 @@ public class Board
 	}
 	
 	/*----------------------------------------------------------------------------------------------------------------*
-	 * Will return true if there are no potential slots left in the board
+	 * Returns true if there are no potential slots left in the board
 	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean noPotential(int i, int j)
 	{
@@ -79,7 +79,7 @@ public class Board
 	}
 	
 	/*----------------------------------------------------------------------------------------------------------------*
-	 * Returns true a number can be added at location (i, j)
+	 * Returns true if a number can be added at location (i, j)
 	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean canAddNumber(int i, int j, int num)
 	{

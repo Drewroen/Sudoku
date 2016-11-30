@@ -8,7 +8,7 @@ public class SudokuSolver {
 	public static void main(String[] args) throws Exception
 	{
 		Board b = new Board();
-		JFrame main = new JFrame("Irregular Sudoku Solver");
+/*		JFrame main = new JFrame("Irregular Sudoku Solver");
 		main.setLayout(new BorderLayout());
 		JComponent board = new JPanel(new GridLayout(9, 9));
 		JComponent numbers = new JPanel(new GridLayout(2, 9));
@@ -49,7 +49,7 @@ public class SudokuSolver {
 		
 		main.pack();
 		
-		main.setVisible(true);
+		main.setVisible(true);*/
 		
 		
 		b.placeNumber(0, 1, 5);
@@ -114,15 +114,15 @@ public class SudokuSolver {
 		System.out.println();
 		b.printBoxRegion();
 		System.out.println();
-		try
+/*		try
 		{
 			b.solve(0, 0);
 		}
 		catch (Exception e) {}
-		b.printBoard();
+		b.printBoard();*/
 		
-//		UserGame game = new UserGame(b);
-//		Board userBoard = game.play();
+		UserGame game = new UserGame(b);
+		Board userBoard = game.play();
 	}
 }
 
