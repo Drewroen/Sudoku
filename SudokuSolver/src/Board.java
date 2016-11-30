@@ -4,19 +4,29 @@ public class Board
 	private int[][] boxArray;
 	private boolean[][][] potentialArray;
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Constructors for the Board class
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public Board()
 	{
 		// board itself
+		// create a new array to store the numbers in the board
 		boardArray = new int[9][9];
+		// fill the array with zeroes to initialize it
 		for(int i = 0; i < 9; i++)
 			for(int j = 0; j < 9; j++)
 				boardArray[i][j] = 0;
+		
 		// regions
+		// create a new array to store the regions of the board
 		boxArray = new int[9][9];
+		// creates a normal sudoku board with region 1 at the top left, region 3 at the top right, and so on. Region 9 is in the bottom right
 		for(int i = 0; i < 9; i++)
 			for(int j = 0; j < 9; j++)
 				boxArray[i][j] = (3*(i/3)) + (j/3) + 1;
 		
+		// potential
+		// create a new array to store if a number can be placed in that location
 		potentialArray = new boolean[9][9][9];
 		for(int i = 0; i < 9; i ++)
 			for(int j = 0; j < 9; j++)
@@ -38,6 +48,10 @@ public class Board
 		potentialArray = b.potentialArray;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Changes the number at location (i, j) in the boardArray to num
+	 * Changes the potentialArray to reflect the board is full at that location
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public void placeNumber(int i, int j, int num)
 	{
 		boardArray[i][j] = num;
@@ -45,11 +59,17 @@ public class Board
 			potentialArray[i][j][k] = false;
 	}
 	
-	public void setPotential(int i, int j, int k, boolean l)
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Sets the potentialArray at location (i, j, k) to the boolean bool
+	 *----------------------------------------------------------------------------------------------------------------*/
+	public void setPotential(int i, int j, int k, boolean bool)
 	{
-		potentialArray[i][j][k - 1] = l;
+		potentialArray[i][j][k - 1] = bool;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Will return true if there are no potential slots left in the board
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean noPotential(int i, int j)
 	{
 		for(int k = 0; k < 9; k++)
@@ -58,6 +78,9 @@ public class Board
 		return true;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true a number can be added at location (i, j)
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean canAddNumber(int i, int j, int num)
 	{
 		if(!checkNumRow(i, num) && !checkNumColumn(j, num) && !checkNumBox(i, j, num) && potentialArray[i][j][num-1])
@@ -67,21 +90,33 @@ public class Board
 		return false;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true if a number is currently at location (i, j)
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean checkNumber(int i, int j)
 	{
 		return boardArray[i][j] != 0;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns the number at location (i, j)
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public int getNumber(int i, int j)
 	{
 		return boardArray[i][j];
 	}
 	
+<<<<<<< HEAD
 	public int getBox(int i, int j)
 	{
 		return boxArray[i][j];
 	}
 	
+=======
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true if the number num is currently in the specified row i
+	 *----------------------------------------------------------------------------------------------------------------*/
+>>>>>>> cdb736eb0a82dced14dee2955bb5a31911c98f9e
 	public boolean checkNumRow(int i, int num)
 	{
 		for(int j = 0; j < 9; j++)
@@ -90,6 +125,9 @@ public class Board
 		return false;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true if the number num is currently in the specified column j
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean checkNumColumn(int j, int num)
 	{
 		for(int i = 0; i < 9; i++)
@@ -98,6 +136,9 @@ public class Board
 		return false;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true if the region at location (i, j) contains the number num
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean checkNumBox(int i, int j, int num)
 	{
 		for(int k = 0; k < 9; k++)
@@ -108,6 +149,10 @@ public class Board
 		return false;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Overloaded
+	 * Returns true if a number num is in region i
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean checkNumBox(int i, int num)
 	{
 		for(int k = 0; k < 9; k++)
@@ -118,6 +163,12 @@ public class Board
 		return false;
 	}
 
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Prints the Board to the console
+	 * I overloaded it just to differentiate between the version I made and the regular printBoard
+	 * Modify to create a visual board in the console
+	 * Looks ugly, but gets the job done at the moment
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public void printBoard()
 	{
 		for(int i = 0; i < 9; i++)
@@ -128,6 +179,81 @@ public class Board
 		}
 	}
 	
+	public void printBoard(int asdf)
+	{
+		String printString = new String();
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				// add the number to the string
+				printString += boardArray[i][j];
+				
+				// juxtapose '|' between the numbers to create a column grid
+				if (j < 8)
+				{
+					// if the regions are different between the two numbers, make the region more noticeable
+					if (boxArray[i][j] != boxArray[i][j+1])
+					{
+						printString += " } ";
+					}
+					// otherwise, create a normal grid
+					else 
+					{
+						printString += " : ";
+					}
+					
+				}
+			}
+			
+			// create a new line
+			printString += "\n";
+			
+			// add a line of dashes between the numbers to create a row grid
+			// 33, 1 for 9 numbers + 3 for 8 vertical bars
+			if (i < 8)
+			{
+				for (int j = 0; j < 9; j++)
+				{
+					// if the regions are different between the top and bottom numbers, make the region noticeable
+					if (boxArray[i][j] != boxArray[i + 1][j])
+					{
+						// if it's the first number in the row, less characters
+						if (j == 0)
+						{
+							printString += "==";
+						}
+						else
+						{
+							printString += "====";
+						}
+					}
+					// otherwise, create a normal grid
+					else
+					{
+						// if it's the first number in the row, less characters
+						if (j == 0)
+						{
+							printString += "--";
+						}
+						else
+						{
+							printString += "----";
+						}
+					}
+				}
+			}
+			
+			// create a new line
+			printString += "\n";
+		}
+		
+		System.out.println(printString);
+	}
+	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Prints the regions of each location on the board
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public void printBoxRegion()
 	{
 		for(int i = 0; i < 9; i++)
@@ -138,6 +264,9 @@ public class Board
 		}
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Ask Drew - this is the only time this method is seen
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean confirmBoxSize()
 	{
 		int[] temp = new int[9];
@@ -150,11 +279,17 @@ public class Board
 		return true;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Changes the region at location (i, j) to the region box
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public void changeBoxRegion(int i, int j, int box)
 	{
 		boxArray[i][j] = box;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true if the board is completely filled
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean checkSolution()
 	{
 		for(int i = 0; i < 9; i++)
@@ -172,6 +307,9 @@ public class Board
 		return true;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true if two boards are equal to another
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public static boolean equals(Board a, Board b)
 	{
 		for(int i = 0; i < 9; i++)
@@ -181,16 +319,25 @@ public class Board
 		return true;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns the boardArray
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public int[][] getBoardArray()
 	{
 		return boardArray.clone();
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns the boxArray
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public int[][] getBoxArray()
 	{
 		return boxArray.clone();
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns a cloned board that is equal to the board that called the function
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public Board clone()
 	{
 		int[][] boardArrayNew = new int[9][9];
@@ -209,6 +356,9 @@ public class Board
 		return new Board(boardArrayNew, boxArrayNew, potentialArrayNew);
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Returns true if the board that called the function is equal to Board A
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public boolean equals(Board a)
 	{
 		for(int i = 0; i < 9; i++)
@@ -227,11 +377,36 @@ public class Board
 		return true;
 	}
 	
+	/*----------------------------------------------------------------------------------------------------------------*
+	 * Recursive function that solves the board
+	 *
+	 * This reads the board by row from left to right.
+	 * 
+	 * 1st case: Row is greater than 8
+	 * 		Throw an exception - this means the board is filled
+	 * 
+	 * 2nd case: A number has been entered at location (row, column)
+	 * 		1st case: There are existing elements in the row
+	 * 			Recursively call the function again, but move ahead one slot
+	 * 		2nd case: The program has read all the elements in the row
+	 * 			Recursively call the function again, but move to the left-most element on the next row
+	 * 
+	 * 3rd case: A number has not been entered at location (row, column)
+	 * 		Run a loop through each number
+	 * 		1st case: The lowest available number can be placed in this location
+	 * 			Place the lowest available number in that location
+	 * 			1st case: There are existing elements in the row
+	 * 				Recursively call the function again, but move ahead one slot
+	 * 			2nd case: The program has read all the elements in the row
+	 * 				Recursively call the function again, but move to the left-most element on the next row
+	 * 		Clear the slot at location (row, column) - ask Drew how the function moves backwards if it goes down a wrong path
+	 *----------------------------------------------------------------------------------------------------------------*/
 	public void solve(int row, int column) throws Exception
 	{
 		if(row > 8)
 			throw new Exception();
 
+		// a number has been entered at (row, column)
 		if(boardArray[row][column] != 0)
 		{
 			if(column < 8)
@@ -239,6 +414,7 @@ public class Board
 			else
 				solve(row + 1, 0);
 		}
+		// a number has not been entered at (row, column)
 		else
 		{
 			for(int i = 0; i < 9; i++)

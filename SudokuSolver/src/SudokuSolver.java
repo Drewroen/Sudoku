@@ -5,8 +5,12 @@ import javax.swing.*;
 
 public class SudokuSolver {
 
+<<<<<<< HEAD
 	public static final JFrame main = new JFrame("Irregular Sudoku Solver");
 	public static void main(String[] args)
+=======
+	public static void main(String[] args) throws Exception
+>>>>>>> cdb736eb0a82dced14dee2955bb5a31911c98f9e
 	{
 		Board b = new Board();
 		
@@ -121,6 +125,9 @@ public class SudokuSolver {
 		}
 		catch (Exception e) {}
 		b.printBoard();
+		
+//		UserGame game = new UserGame(b);
+//		Board userBoard = game.play();
 	}
 	
 	public static void init()
