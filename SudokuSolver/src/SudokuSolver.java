@@ -13,7 +13,11 @@ public class SudokuSolver {
 >>>>>>> cdb736eb0a82dced14dee2955bb5a31911c98f9e
 	{
 		Board b = new Board();
+<<<<<<< HEAD
 		
+=======
+/*		JFrame main = new JFrame("Irregular Sudoku Solver");
+>>>>>>> e3dc799f471027d95a08fbf5ecefa03e24d5afc3
 		main.setLayout(new BorderLayout());
 		JComponent board = new JPanel(new GridLayout(9, 9));
 		JComponent numbers = new JPanel(new GridLayout(2, 10));
@@ -54,7 +58,7 @@ public class SudokuSolver {
 		
 		main.pack();
 		
-		main.setVisible(true);
+		main.setVisible(true);*/
 		
 		
 		b.placeNumber(0, 1, 5);
@@ -119,15 +123,15 @@ public class SudokuSolver {
 		System.out.println();
 		b.printBoxRegion();
 		System.out.println();
-		try
+/*		try
 		{
 			b.solve(0, 0);
 		}
 		catch (Exception e) {}
-		b.printBoard();
+		b.printBoard();*/
 		
-//		UserGame game = new UserGame(b);
-//		Board userBoard = game.play();
+		UserGame game = new UserGame(b);
+		Board userBoard = game.play();
 	}
 	
 	public static void init()

@@ -3,10 +3,12 @@ import java.util.Scanner;
 public class UserGame {
 	
 	private Board b;
+	private Board initialBoard;
 	
 	public UserGame(Board b)
 	{
 		this.b = b;
+		this.initialBoard = b;
 	}
 	
 	public Board play() throws Exception
@@ -27,14 +29,39 @@ public class UserGame {
 			
 			userInput = scanner.nextInt();
 			
+            // create functions for each individual case statement. this way it can be used via the GUI jpanel
 			switch (userInput) {
 			case 1:
+				b.printBoard(1);
 				break;
 				
 			case 2:
+				b.printBoxRegion();
 				break;
 				
 			case 3:
+				b.printBoard(1);
+				System.out.println();
+				
+				System.out.println("Enter the coordinates you would like to change (row, column) (enter '10' to go back): ");
+				int row = scanner.nextInt();
+				if (row == 10) break;
+				int column = scanner.nextInt();
+				
+				System.out.println("Enter the number you would like to place at (" + row + " , " + column + ") (enter '10' to go back): ");
+				int number = scanner.nextInt();
+				if (number == 10) break;
+				
+				boolean canAddNumber = b.canAddNumber(row, column, number);
+				if (canAddNumber)
+				{
+					b.placeNumber(row, column, number);
+				}
+				else
+				{
+					System.out.println("You cannot place a number there!");
+				}
+				
 				break;
 				
 			case 4:
@@ -44,10 +71,10 @@ public class UserGame {
 				done = true;
 				try
 				{
-					b.solve(0, 0);
+					initialBoard.solve(0, 0);
 				}
 				catch (Exception e) {}
-				b.printBoard();
+				initialBoard.printBoard();
 				break;
 				
 			default:
