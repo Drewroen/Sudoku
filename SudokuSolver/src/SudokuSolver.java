@@ -5,19 +5,13 @@ import javax.swing.*;
 
 public class SudokuSolver {
 
-<<<<<<< HEAD
+
 	public static final JFrame main = new JFrame("Irregular Sudoku Solver");
-	public static void main(String[] args)
-=======
 	public static void main(String[] args) throws Exception
->>>>>>> cdb736eb0a82dced14dee2955bb5a31911c98f9e
 	{
 		Board b = new Board();
-<<<<<<< HEAD
-		
-=======
-/*		JFrame main = new JFrame("Irregular Sudoku Solver");
->>>>>>> e3dc799f471027d95a08fbf5ecefa03e24d5afc3
+
+		JFrame main = new JFrame("Irregular Sudoku Solver");
 		main.setLayout(new BorderLayout());
 		JComponent board = new JPanel(new GridLayout(9, 9));
 		JComponent numbers = new JPanel(new GridLayout(2, 10));
@@ -58,8 +52,7 @@ public class SudokuSolver {
 		
 		main.pack();
 		
-		main.setVisible(true);*/
-		
+		main.setVisible(true);
 		
 		b.placeNumber(0, 1, 5);
 		b.placeNumber(0, 2, 3);

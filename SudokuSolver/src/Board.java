@@ -106,17 +106,16 @@ public class Board
 		return boardArray[i][j];
 	}
 	
-<<<<<<< HEAD
+
 	public int getBox(int i, int j)
 	{
 		return boxArray[i][j];
 	}
 	
-=======
+
 	/*----------------------------------------------------------------------------------------------------------------*
 	 * Returns true if the number num is currently in the specified row i
 	 *----------------------------------------------------------------------------------------------------------------*/
->>>>>>> cdb736eb0a82dced14dee2955bb5a31911c98f9e
 	public boolean checkNumRow(int i, int num)
 	{
 		for(int j = 0; j < 9; j++)
