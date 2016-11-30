@@ -5,13 +5,14 @@ import javax.swing.*;
 
 public class SudokuSolver {
 
+	public static final JFrame main = new JFrame("Irregular Sudoku Solver");
 	public static void main(String[] args)
 	{
 		Board b = new Board();
-		JFrame main = new JFrame("Irregular Sudoku Solver");
+		
 		main.setLayout(new BorderLayout());
 		JComponent board = new JPanel(new GridLayout(9, 9));
-		JComponent numbers = new JPanel(new GridLayout(2, 9));
+		JComponent numbers = new JPanel(new GridLayout(2, 10));
 		
 		numbers.add(new InputBox("1"));
 		numbers.add(new InputBox("2"));
@@ -22,6 +23,7 @@ public class SudokuSolver {
 		numbers.add(new InputBox("7"));
 		numbers.add(new InputBox("8"));
 		numbers.add(new InputBox("9"));
+		numbers.add(new InputBox("ERASE"));
 		numbers.add(new InputBox("A"));
 		numbers.add(new InputBox("B"));
 		numbers.add(new InputBox("C"));
@@ -32,11 +34,10 @@ public class SudokuSolver {
 		numbers.add(new InputBox("H"));
 		numbers.add(new InputBox("I"));
 		
-		numbers.setPreferredSize(new Dimension(270, 90));
-		
-		main.pack();
+		numbers.setPreferredSize(new Dimension(200, 200));
+		board.setPreferredSize(new Dimension(600, 620));
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		board.setPreferredSize(new Dimension(400, 420));
+		
 		
 		for(int i = 0; i < 9; i++)
 		{
@@ -121,6 +122,11 @@ public class SudokuSolver {
 		catch (Exception e) {}
 		b.printBoard();
 	}
+	
+	public static void init()
+	{
+		
+	}
 }
 
 class Box extends JPanel
@@ -140,8 +146,21 @@ class Box extends JPanel
     {
     	g.drawLine(0 + 2, 0 + 2, 0 + 2, this.getHeight() - 2);
     	g.drawLine(0 + 2, 0 + 2, this.getWidth() - 2, 0 + 2);
+    	//g.drawLine(this.getWidth() - 2, 0 + 2, this.getWidth() - 2, this.getHeight() - 2);
+    	//g.drawLine(0 + 2, this.getHeight() - 2, this.getWidth() - 2, this.getHeight() - 2);
+    	
+    	if(y != 8 && (b.getBox(x, y) != b.getBox(x, y + 1)))
+    		g.drawLine(this.getWidth() - 1, 0 + 1, this.getWidth() - 1, this.getHeight() - 1);
     	g.drawLine(this.getWidth() - 2, 0 + 2, this.getWidth() - 2, this.getHeight() - 2);
+    	if(x != 8 && (b.getBox(x, y) != b.getBox(x + 1, y)))
+    		g.drawLine(0 + 1, this.getHeight() - 1, this.getWidth() - 1, this.getHeight() - 1);
     	g.drawLine(0 + 2, this.getHeight() - 2, this.getWidth() - 2, this.getHeight() - 2);
+    	if(y != 0 && (b.getBox(x, y) != b.getBox(x, y - 1)))
+    		g.drawLine(0 + 1, 0 + 1, 0 + 1, this.getHeight() - 1);
+    	g.drawLine(0 + 2, 0 + 2, 0 + 2, this.getHeight() - 2);
+    	if(x != 0 && (b.getBox(x, y) != b.getBox(x - 1, y)))
+    		g.drawLine(0 + 1, 0 + 1, this.getWidth() - 1, 0  + 1);
+    	g.drawLine(0 + 2, 0 + 2, this.getWidth() - 2, 0 + 2);
     	
     	if(b.getNumber(x, y) == 1)
     		g.drawString("1", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
@@ -161,10 +180,13 @@ class Box extends JPanel
     		g.drawString("8", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
     	else if(b.getNumber(x, y) == 9)
     		g.drawString("9", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
+    	
+    	
+    			
     }
 }
 
-class InputBox extends JPanel
+class InputBox extends JComponent
 {
     private String x;
     

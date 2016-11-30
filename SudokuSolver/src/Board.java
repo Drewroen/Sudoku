@@ -77,6 +77,11 @@ public class Board
 		return boardArray[i][j];
 	}
 	
+	public int getBox(int i, int j)
+	{
+		return boxArray[i][j];
+	}
+	
 	public boolean checkNumRow(int i, int num)
 	{
 		for(int j = 0; j < 9; j++)
