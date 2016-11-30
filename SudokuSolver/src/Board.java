@@ -157,10 +157,21 @@ public class Board
 
 	/*----------------------------------------------------------------------------------------------------------------*
 	 * Prints the Board to the console
+	 * I overloaded it just to differentiate between the version I made and the regular printBoard
 	 * Modify to create a visual board in the console
 	 * Looks ugly, but gets the job done at the moment
 	 *----------------------------------------------------------------------------------------------------------------*/
 	public void printBoard()
+	{
+		for(int i = 0; i < 9; i++)
+		{
+			for(int j = 0; j < 9; j++)
+				System.out.print(boardArray[i][j] + " ");
+			System.out.println();
+		}
+	}
+	
+	public void printBoard(int asdf)
 	{
 		String printString = new String();
 		for (int i = 0; i < 9; i++)
