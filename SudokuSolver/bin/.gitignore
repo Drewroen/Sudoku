@@ -1,2 +1,5 @@
 /images/
 /InputBox.class
+/MouseEventDemo.class
+/BoardMouseListener.class
+/InputMouseListener.class

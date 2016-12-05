@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.*;
@@ -14,8 +16,10 @@ public class SudokuSolver {
 	
 	public static void init()
 	{
-		Board b = new Board();
 		InputBox c = new InputBox();
+		Board b = new Board(c);
+		b.addMouseListener(new BoardMouseListener());
+		c.addMouseListener(new InputMouseListener());
 		
 		b.placeNumber(0, 1, 5);
 		b.placeNumber(0, 2, 3);
@@ -80,19 +84,11 @@ public class SudokuSolver {
 		c.setPreferredSize(new Dimension(576, 115));
 		
 		main.add(b);
-		main.add(Box.createHorizontalStrut(30), BorderLayout.SOUTH); // Fixed width invisible separator.
 		main.add(c, BorderLayout.SOUTH);
 		main.pack();
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setBackground(Color.BLACK);
 		main.setVisible(true);
-		
-/*		try
-		{
-			b.solve(0, 0);
-		}
-		catch (Exception e) {}
-		b.printBoard();*/
 		
 		UserGame game = new UserGame(b);
 		try {
@@ -102,4 +98,44 @@ public class SudokuSolver {
 			e.printStackTrace();
 		}
 	}
+}
+
+class BoardMouseListener implements MouseListener
+{
+    public void mousePressed(MouseEvent e)
+    {
+        System.out.println("You clicked the board!");
+    }
+    public void mouseReleased(MouseEvent e)
+    {
+    }
+    public void mouseEntered(MouseEvent e)
+    {
+    }
+    public void mouseExited(MouseEvent e)
+    {
+    }
+    public void mouseClicked(MouseEvent e)
+    {
+    }
+}
+
+class InputMouseListener implements MouseListener
+{
+    public void mousePressed(MouseEvent e)
+    {
+        System.out.println("You clicked the input area!");
+    }
+    public void mouseReleased(MouseEvent e)
+    {
+    }
+    public void mouseEntered(MouseEvent e)
+    {
+    }
+    public void mouseExited(MouseEvent e)
+    {
+    }
+    public void mouseClicked(MouseEvent e)
+    {
+    }
 }

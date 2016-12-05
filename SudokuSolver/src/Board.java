@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.*;
 
@@ -15,12 +17,14 @@ public class Board extends JComponent
 	private int[][] boardArray;
 	private int[][] boxArray;
 	private boolean[][][] potentialArray;
+	private InputBox input;
 	
 	/*----------------------------------------------------------------------------------------------------------------*
 	 * Constructors for the Board class
 	 *----------------------------------------------------------------------------------------------------------------*/
-	public Board()
+	public Board(InputBox input)
 	{
+		this.input = input;
 		// board itself
 		// create a new array to store the numbers in the board
 		boardArray = new int[9][9];
@@ -71,6 +75,7 @@ public class Board extends JComponent
 		boardArray[i][j] = num;
 		for(int k = 0; k < 9; k++)
 			potentialArray[i][j][k] = false;
+		repaint();
 	}
 	
 	/*----------------------------------------------------------------------------------------------------------------*
@@ -443,6 +448,40 @@ public class Board extends JComponent
 			}
 			boardArray[row][column] = 0;
 		}
+		repaint();
+	}
+	
+	public void solveWithVisual(int row, int column) throws Exception
+	{
+		if(row > 8)
+			throw new Exception();
+
+		// a number has been entered at (row, column)
+		if(boardArray[row][column] != 0)
+		{
+			if(column < 8)
+				solve(row, column + 1);
+			else
+				solve(row + 1, 0);
+		}
+		// a number has not been entered at (row, column)
+		else
+		{
+			for(int i = 0; i < 9; i++)
+			{
+				if(!checkNumRow(row, i + 1) && !checkNumColumn(column, i + 1) && !checkNumBox(row,column, i + 1))
+				{
+					boardArray[row][column] = i + 1;
+					if(column < 8)
+						solve(row, column + 1);
+					else
+						solve(row + 1, 0);
+				}
+			}
+			boardArray[row][column] = 0;
+		}
+		Thread.sleep(1);
+		repaint();
 	}
 	
 	public void paintComponent(Graphics g)
