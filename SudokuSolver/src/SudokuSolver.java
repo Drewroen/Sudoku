@@ -9,50 +9,13 @@ public class SudokuSolver {
 	public static final JFrame main = new JFrame("Irregular Sudoku Solver");
 	public static void main(String[] args) throws Exception
 	{
+		init();
+	}
+	
+	public static void init()
+	{
 		Board b = new Board();
-
-		JFrame main = new JFrame("Irregular Sudoku Solver");
-		main.setLayout(new BorderLayout());
-		JComponent board = new JPanel(new GridLayout(9, 9));
-		JComponent numbers = new JPanel(new GridLayout(2, 10));
-		
-		numbers.add(new InputBox("1"));
-		numbers.add(new InputBox("2"));
-		numbers.add(new InputBox("3"));
-		numbers.add(new InputBox("4"));
-		numbers.add(new InputBox("5"));
-		numbers.add(new InputBox("6"));
-		numbers.add(new InputBox("7"));
-		numbers.add(new InputBox("8"));
-		numbers.add(new InputBox("9"));
-		numbers.add(new InputBox("ERASE"));
-		numbers.add(new InputBox("A"));
-		numbers.add(new InputBox("B"));
-		numbers.add(new InputBox("C"));
-		numbers.add(new InputBox("D"));
-		numbers.add(new InputBox("E"));
-		numbers.add(new InputBox("F"));
-		numbers.add(new InputBox("G"));
-		numbers.add(new InputBox("H"));
-		numbers.add(new InputBox("I"));
-		
-		numbers.setPreferredSize(new Dimension(200, 200));
-		board.setPreferredSize(new Dimension(600, 620));
-		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		for(int i = 0; i < 9; i++)
-		{
-			for(int j = 0; j < 9; j++)
-				board.add(new Box(i, j, b));
-		}
-
-		main.add(board);
-		main.add(numbers, BorderLayout.SOUTH);
-		
-		main.pack();
-		
-		main.setVisible(true);
+		InputBox c = new InputBox();
 		
 		b.placeNumber(0, 1, 5);
 		b.placeNumber(0, 2, 3);
@@ -111,11 +74,19 @@ public class SudokuSolver {
 		
 		b.changeBoxRegion(5, 7, 9);
 		b.changeBoxRegion(5, 8, 9);
+
+		main.setPreferredSize(new Dimension(576, 710));
+		b.setPreferredSize(new Dimension(576, 576));
+		c.setPreferredSize(new Dimension(576, 115));
 		
-		b.printBoard();
-		System.out.println();
-		b.printBoxRegion();
-		System.out.println();
+		main.add(b);
+		main.add(Box.createHorizontalStrut(30), BorderLayout.SOUTH); // Fixed width invisible separator.
+		main.add(c, BorderLayout.SOUTH);
+		main.pack();
+		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main.setBackground(Color.BLACK);
+		main.setVisible(true);
+		
 /*		try
 		{
 			b.solve(0, 0);
@@ -124,87 +95,11 @@ public class SudokuSolver {
 		b.printBoard();*/
 		
 		UserGame game = new UserGame(b);
-		Board userBoard = game.play();
+		try {
+			Board userBoard = game.play();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	public static void init()
-	{
-		
-	}
-}
-
-class Box extends JPanel
-{ 
-    private int x;
-    private int y;
-    private Board b;
-    
-    public Box(int x, int y, Board b)
-    {
-    	this.x = x;
-    	this.y = y;
-    	this.b = b;
-    }
-    
-    public void paintComponent(Graphics g)
-    {
-    	g.drawLine(0 + 2, 0 + 2, 0 + 2, this.getHeight() - 2);
-    	g.drawLine(0 + 2, 0 + 2, this.getWidth() - 2, 0 + 2);
-    	//g.drawLine(this.getWidth() - 2, 0 + 2, this.getWidth() - 2, this.getHeight() - 2);
-    	//g.drawLine(0 + 2, this.getHeight() - 2, this.getWidth() - 2, this.getHeight() - 2);
-    	
-    	if(y != 8 && (b.getBox(x, y) != b.getBox(x, y + 1)))
-    		g.drawLine(this.getWidth() - 1, 0 + 1, this.getWidth() - 1, this.getHeight() - 1);
-    	g.drawLine(this.getWidth() - 2, 0 + 2, this.getWidth() - 2, this.getHeight() - 2);
-    	if(x != 8 && (b.getBox(x, y) != b.getBox(x + 1, y)))
-    		g.drawLine(0 + 1, this.getHeight() - 1, this.getWidth() - 1, this.getHeight() - 1);
-    	g.drawLine(0 + 2, this.getHeight() - 2, this.getWidth() - 2, this.getHeight() - 2);
-    	if(y != 0 && (b.getBox(x, y) != b.getBox(x, y - 1)))
-    		g.drawLine(0 + 1, 0 + 1, 0 + 1, this.getHeight() - 1);
-    	g.drawLine(0 + 2, 0 + 2, 0 + 2, this.getHeight() - 2);
-    	if(x != 0 && (b.getBox(x, y) != b.getBox(x - 1, y)))
-    		g.drawLine(0 + 1, 0 + 1, this.getWidth() - 1, 0  + 1);
-    	g.drawLine(0 + 2, 0 + 2, this.getWidth() - 2, 0 + 2);
-    	
-    	if(b.getNumber(x, y) == 1)
-    		g.drawString("1", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 2)
-    		g.drawString("2", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 3)
-    		g.drawString("3", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 4)
-    		g.drawString("4", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 5)
-    		g.drawString("5", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 6)
-    		g.drawString("6", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 7)
-    		g.drawString("7", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 8)
-    		g.drawString("8", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	else if(b.getNumber(x, y) == 9)
-    		g.drawString("9", (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    	
-    	
-    			
-    }
-}
-
-class InputBox extends JComponent
-{
-    private String x;
-    
-    public InputBox(String x)
-    {
-    	this.x = x;
-    }
-    
-    public void paintComponent(Graphics g)
-    {
-    	g.drawLine(0 + 2, 0 + 2, 0 + 2, this.getHeight() - 2);
-    	g.drawLine(0 + 2, 0 + 2, this.getWidth() - 2, 0 + 2);
-    	g.drawLine(this.getWidth() - 2, 0 + 2, this.getWidth() - 2, this.getHeight() - 2);
-    	g.drawLine(0 + 2, this.getHeight() - 2, this.getWidth() - 2, this.getHeight() - 2);
-    	g.drawString(x, (int)(this.getWidth() / 2.3), (int)(this.getHeight() / 1.8));
-    }
 }
