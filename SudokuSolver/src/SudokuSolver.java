@@ -79,9 +79,8 @@ public class SudokuSolver {
 		b.changeBoxRegion(5, 7, 9);
 		b.changeBoxRegion(5, 8, 9);
 
-		//main.setPreferredSize(new Dimension(613, 710));
-		b.setPreferredSize(new Dimension(640, 640));
-		c.setPreferredSize(new Dimension(613, 214));
+		b.setPreferredSize(new Dimension(630, 630));
+		c.setPreferredSize(new Dimension(630, 214));
 		
 		main.add(b);
 		main.add(c, BorderLayout.SOUTH);
@@ -91,13 +90,6 @@ public class SudokuSolver {
 		main.setResizable(false);
 		main.setVisible(true);
 		
-<<<<<<< HEAD
-	}
-	
-	public static void init()
-	{
-		
-=======
 		UserGame game = new UserGame(b);
 		try {
 			Board userBoard = game.play();
@@ -105,6 +97,6 @@ public class SudokuSolver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
->>>>>>> 55bf4a515851eafd684859c87d0de560870db3e2
 	}
+
 }
