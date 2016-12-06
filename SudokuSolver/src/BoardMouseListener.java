@@ -23,6 +23,7 @@ public class BoardMouseListener implements MouseListener
         int mouseColumn = mouseX / 70;
         int mouseRow = mouseY / 70;
         
+        numberSelected = b.getRegion(mouseRow, mouseColumn);
         
         if (eraseSelected)
         {
