@@ -124,7 +124,7 @@ public class Board extends JComponent
 	}
 	
 
-	public int getBox(int i, int j)
+	public int getRegion(int i, int j)
 	{
 		return boxArray[i][j];
 	}
