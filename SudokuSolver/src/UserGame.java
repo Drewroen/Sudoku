@@ -29,7 +29,7 @@ public class UserGame {
 			
 			userInput = scanner.nextInt();
 			
-            // create functions for each individual case statement. this way it can be used via the GUI jpanel
+            // create functions for each individual case statement. this way they can be used via the GUI jpanel
 			switch (userInput) {
 			case 1:
 				b.printBoard(1);

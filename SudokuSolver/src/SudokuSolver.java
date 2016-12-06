@@ -123,8 +123,6 @@ public class SudokuSolver {
 		catch (Exception e) {}
 		b.printBoard();*/
 		
-		UserGame game = new UserGame(b);
-		Board userBoard = game.play();
 	}
 	
 	public static void init()
