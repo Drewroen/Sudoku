@@ -18,8 +18,8 @@ public class SudokuSolver {
 	{
 		InputBox c = new InputBox();
 		Board b = new Board(c);
-		b.addMouseListener(new BoardMouseListener());
-		c.addMouseListener(new InputMouseListener());
+		b.addMouseListener(new BoardMouseListener(b, c));
+		c.addMouseListener(new InputMouseListener(b, c));
 		
 		b.placeNumber(0, 1, 5);
 		b.placeNumber(0, 2, 3);
@@ -79,15 +79,16 @@ public class SudokuSolver {
 		b.changeBoxRegion(5, 7, 9);
 		b.changeBoxRegion(5, 8, 9);
 
-		main.setPreferredSize(new Dimension(576, 710));
-		b.setPreferredSize(new Dimension(576, 576));
-		c.setPreferredSize(new Dimension(576, 115));
+		//main.setPreferredSize(new Dimension(613, 710));
+		b.setPreferredSize(new Dimension(640, 640));
+		c.setPreferredSize(new Dimension(613, 214));
 		
 		main.add(b);
 		main.add(c, BorderLayout.SOUTH);
 		main.pack();
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setBackground(Color.BLACK);
+		main.setResizable(false);
 		main.setVisible(true);
 		
 		UserGame game = new UserGame(b);
@@ -98,44 +99,4 @@ public class SudokuSolver {
 			e.printStackTrace();
 		}
 	}
-}
-
-class BoardMouseListener implements MouseListener
-{
-    public void mousePressed(MouseEvent e)
-    {
-        System.out.println("You clicked the board!");
-    }
-    public void mouseReleased(MouseEvent e)
-    {
-    }
-    public void mouseEntered(MouseEvent e)
-    {
-    }
-    public void mouseExited(MouseEvent e)
-    {
-    }
-    public void mouseClicked(MouseEvent e)
-    {
-    }
-}
-
-class InputMouseListener implements MouseListener
-{
-    public void mousePressed(MouseEvent e)
-    {
-        System.out.println("You clicked the input area!");
-    }
-    public void mouseReleased(MouseEvent e)
-    {
-    }
-    public void mouseEntered(MouseEvent e)
-    {
-    }
-    public void mouseExited(MouseEvent e)
-    {
-    }
-    public void mouseClicked(MouseEvent e)
-    {
-    }
 }

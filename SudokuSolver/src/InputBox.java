@@ -25,7 +25,7 @@ public class InputBox extends JComponent
 			{
 				Image box = null;
 				box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Buttons.png"));
-				BufferedImage boxBuffered = new BufferedImage(613, 125, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage boxBuffered = new BufferedImage(613, 214, BufferedImage.TYPE_INT_ARGB);
 				boxBuffered.getGraphics().drawImage(box, 0, 0, null);
 				g2.drawImage(boxBuffered, 0, 0, (int)getSize().getWidth(), (int)getSize().getHeight(), this);
 			}	
