@@ -26,7 +26,7 @@ public class BoardMouseListener implements MouseListener
         
         if (eraseSelected)
         {
-        	
+        	b.placeNumber(mouseRow, mouseColumn, 0);
         }
         else
         {
