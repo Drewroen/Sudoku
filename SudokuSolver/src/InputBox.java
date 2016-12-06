@@ -9,9 +9,11 @@ import javax.swing.JComponent;
 
 public class InputBox extends JComponent
 {
+	private int input;
     
     public InputBox()
     {
+    	input = -1;
     }
     
     public void paintComponent(Graphics g)
@@ -25,9 +27,19 @@ public class InputBox extends JComponent
 			{
 				Image box = null;
 				box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Buttons.png"));
-				BufferedImage boxBuffered = new BufferedImage(630, 214, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage boxBuffered = new BufferedImage(630, 269, BufferedImage.TYPE_INT_ARGB);
 				boxBuffered.getGraphics().drawImage(box, 0, 0, null);
 				g2.drawImage(boxBuffered, 0, 0, (int)getSize().getWidth(), (int)getSize().getHeight(), this);
 			}	
+    }
+    
+    public void setInput(int i)
+    {
+    	input = i;
+    }
+    
+    public int getInput()
+    {
+    	return input;
     }
 }

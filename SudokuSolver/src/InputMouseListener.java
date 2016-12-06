@@ -1,3 +1,4 @@
+import java.awt.MouseInfo;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -14,9 +15,25 @@ public class InputMouseListener implements MouseListener
 	
     public void mousePressed(MouseEvent e)
     {
-        System.out.println("You clicked the input area!");
-        System.out.println(e.getX() + "," + e.getY());
-        System.out.println(e.getX());
+    	if((e.getY() < 170) && (e.getY() > 29))
+	        c.setInput((e.getX() / 70) + (9 * ((e.getY() - 30) / 70)));
+    	else if((e.getY() >= 170) && (e.getY() <= 239))
+    	{
+    		if((e.getX() >= 105) && (e.getX() <= 524))
+    			if((e.getX() - 105) / 140 == 0)
+    				c.setInput(18);
+    			if((e.getX() - 105) / 140 == 1)
+    			{
+					try {
+						b.solveWithVisual(0, 0);
+					} catch (Exception e1){}
+    				b.repaint();
+    			}
+    			if((e.getX() - 105) / 140 == 2)
+    			{
+    				b.clearBoard();
+    			}
+    	}
     }
     public void mouseReleased(MouseEvent e)
     {

@@ -5,32 +5,29 @@ public class BoardMouseListener implements MouseListener
 {
 	private Board b;
 	private InputBox c;
-	private int numberSelected;
-	private boolean eraseSelected;
 	
 	public BoardMouseListener(Board b, InputBox c)
 	{
 		this.b = b;
 		this.c = c;
-		this.numberSelected = 1;
-		this.eraseSelected = false;
 	}
 	
     public void mousePressed(MouseEvent e)
     {
-        int mouseX = e.getX();
-        int mouseY = e.getY();
-        int mouseColumn = mouseX / 70;
-        int mouseRow = mouseY / 70;
+        int mouseColumn = e.getX() / 70;
+        int mouseRow = e.getY() / 70;
         
-        
-        if (eraseSelected)
+        if(c.getInput() <= 8)
         {
-        	
+        	b.changeBoxRegion(mouseRow, mouseColumn, c.getInput() + 1);
         }
-        else
+        else if(c.getInput() >= 9 && c.getInput() <= 17)
         {
-        	b.placeNumber(mouseRow, mouseColumn, numberSelected);
+        	b.placeNumber(mouseRow, mouseColumn, c.getInput() - 8);
+        }
+        else if(c.getInput() == 18)
+        {
+        	b.placeNumber(mouseRow, mouseColumn, 0);
         }
     }
     public void mouseReleased(MouseEvent e)
