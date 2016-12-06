@@ -5,16 +5,33 @@ public class BoardMouseListener implements MouseListener
 {
 	private Board b;
 	private InputBox c;
+	private int numberSelected;
+	private boolean eraseSelected;
 	
 	public BoardMouseListener(Board b, InputBox c)
 	{
 		this.b = b;
 		this.c = c;
+		this.numberSelected = 1;
+		this.eraseSelected = false;
 	}
 	
     public void mousePressed(MouseEvent e)
     {
-        System.out.println("You clicked the board!");
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+        int mouseColumn = mouseX / 70;
+        int mouseRow = mouseY / 70;
+        
+        
+        if (eraseSelected)
+        {
+        	
+        }
+        else
+        {
+        	b.placeNumber(mouseRow, mouseColumn, numberSelected);
+        }
     }
     public void mouseReleased(MouseEvent e)
     {
