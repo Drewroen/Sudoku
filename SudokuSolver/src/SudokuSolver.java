@@ -79,9 +79,14 @@ public class SudokuSolver {
 		b.changeBoxRegion(5, 7, 9);
 		b.changeBoxRegion(5, 8, 9);
 
+<<<<<<< HEAD
+		b.setPreferredSize(new Dimension(630, 630));
+		c.setPreferredSize(new Dimension(630, 214));
+=======
 		//main.setPreferredSize(new Dimension(613, 710));
 		b.setPreferredSize(new Dimension(630, 630));
 		c.setPreferredSize(new Dimension(613, 214));
+>>>>>>> 89fcec009bc92b202889c73d0a893431da4fb2d4
 		
 		main.add(b);
 		main.add(c, BorderLayout.SOUTH);
@@ -99,5 +104,9 @@ public class SudokuSolver {
 			e.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
+
+=======
 	
+>>>>>>> 89fcec009bc92b202889c73d0a893431da4fb2d4
 }
