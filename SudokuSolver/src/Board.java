@@ -1,14 +1,30 @@
-public class Board
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.*;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
+public class Board extends JComponent
 {
 	private int[][] boardArray;
 	private int[][] boxArray;
 	private boolean[][][] potentialArray;
+	private InputBox input;
 	
 	/*----------------------------------------------------------------------------------------------------------------*
 	 * Constructors for the Board class
 	 *----------------------------------------------------------------------------------------------------------------*/
-	public Board()
+	public Board(InputBox input)
 	{
+		this.input = input;
 		// board itself
 		// create a new array to store the numbers in the board
 		boardArray = new int[9][9];
@@ -32,6 +48,8 @@ public class Board
 			for(int j = 0; j < 9; j++)
 				for(int k = 0; k < 9; k++)
 					potentialArray[i][j][k] = true;
+		
+		setPreferredSize(new Dimension(64*9, 64*9));
 	}
 	
 	public Board(int[][] board, int[][] box, boolean[][][] potential)
@@ -57,6 +75,7 @@ public class Board
 		boardArray[i][j] = num;
 		for(int k = 0; k < 9; k++)
 			potentialArray[i][j][k] = false;
+		repaint();
 	}
 	
 	/*----------------------------------------------------------------------------------------------------------------*
@@ -429,5 +448,99 @@ public class Board
 			}
 			boardArray[row][column] = 0;
 		}
+		repaint();
 	}
+	
+	public void solveWithVisual(int row, int column) throws Exception
+	{
+		if(row > 8)
+			throw new Exception();
+
+		// a number has been entered at (row, column)
+		if(boardArray[row][column] != 0)
+		{
+			if(column < 8)
+				solve(row, column + 1);
+			else
+				solve(row + 1, 0);
+		}
+		// a number has not been entered at (row, column)
+		else
+		{
+			for(int i = 0; i < 9; i++)
+			{
+				if(!checkNumRow(row, i + 1) && !checkNumColumn(column, i + 1) && !checkNumBox(row,column, i + 1))
+				{
+					boardArray[row][column] = i + 1;
+					if(column < 8)
+						solve(row, column + 1);
+					else
+						solve(row + 1, 0);
+				}
+			}
+			boardArray[row][column] = 0;
+		}
+		Thread.sleep(1);
+		repaint();
+	}
+	
+	public void paintComponent(Graphics g)
+    {
+		setBackground(Color.BLACK);
+		Graphics2D g2 = (Graphics2D)g;
+    			
+    	
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+			{
+				Image box = null;
+				if(boxArray[i][j] == 1)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box1.png"));
+				if(boxArray[i][j] == 2)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box2.png"));
+				if(boxArray[i][j] == 3)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box3.png"));
+				if(boxArray[i][j] == 4)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box4.png"));
+				if(boxArray[i][j] == 5)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box5.png"));
+				if(boxArray[i][j] == 6)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box6.png"));
+				if(boxArray[i][j] == 7)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box7.png"));
+				if(boxArray[i][j] == 8)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box8.png"));
+				if(boxArray[i][j] == 9)
+					box = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Box9.png"));
+				BufferedImage boxBuffered = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+				boxBuffered.getGraphics().drawImage(box, 0, 0, null);
+				g2.drawImage(boxBuffered, ((int)getSize().getWidth() / 9)*j, ((int)getSize().getHeight() / 9)*i, (int)getSize().getWidth() / 9, (int)getSize().getHeight() / 9, this);
+				
+				Image number = null;
+				if(boardArray[i][j] != 0)
+				{
+					if(boardArray[i][j] == 1)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number1.png"));
+					if(boardArray[i][j] == 2)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number2.png"));
+					if(boardArray[i][j] == 3)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number3.png"));
+					if(boardArray[i][j] == 4)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number4.png"));
+					if(boardArray[i][j] == 5)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number5.png"));
+					if(boardArray[i][j] == 6)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number6.png"));
+					if(boardArray[i][j] == 7)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number7.png"));
+					if(boardArray[i][j] == 8)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number8.png"));
+					if(boardArray[i][j] == 9)
+						number = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Number9.png"));
+					BufferedImage numberBuffered = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+					numberBuffered.getGraphics().drawImage(number, 0, 0, null);
+					g2.drawImage(numberBuffered, ((int)getSize().getWidth() / 9)*j, ((int)getSize().getHeight() / 9)*i, (int)getSize().getWidth() / 9, (int)getSize().getHeight() / 9, this);
+				}
+			}		
+    }
 }
