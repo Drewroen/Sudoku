@@ -91,6 +91,13 @@ public class SudokuSolver {
 		main.setResizable(false);
 		main.setVisible(true);
 		
+<<<<<<< HEAD
+	}
+	
+	public static void init()
+	{
+		
+=======
 		UserGame game = new UserGame(b);
 		try {
 			Board userBoard = game.play();
@@ -98,5 +105,6 @@ public class SudokuSolver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+>>>>>>> 55bf4a515851eafd684859c87d0de560870db3e2
 	}
 }
