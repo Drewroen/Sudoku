@@ -48,8 +48,6 @@ public class Board extends JComponent
 			for(int j = 0; j < 9; j++)
 				for(int k = 0; k < 9; k++)
 					potentialArray[i][j][k] = true;
-		
-		setPreferredSize(new Dimension(64*9, 64*9));
 	}
 	
 	public Board(int[][] board, int[][] box, boolean[][][] potential)
@@ -303,6 +301,7 @@ public class Board extends JComponent
 	public void changeBoxRegion(int i, int j, int box)
 	{
 		boxArray[i][j] = box;
+		repaint();
 	}
 	
 	/*----------------------------------------------------------------------------------------------------------------*
@@ -419,10 +418,16 @@ public class Board extends JComponent
 	 * 				Recursively call the function again, but move to the left-most element on the next row
 	 * 		Clear the slot at location (row, column) - ask Drew how the function moves backwards if it goes down a wrong path
 	 *----------------------------------------------------------------------------------------------------------------*/
+	
 	public void solve(int row, int column) throws Exception
 	{
 		if(row > 8)
+		{
+			repaint();
+			revalidate();
 			throw new Exception();
+		}
+			
 
 		// a number has been entered at (row, column)
 		if(boardArray[row][column] != 0)
@@ -449,6 +454,7 @@ public class Board extends JComponent
 			boardArray[row][column] = 0;
 		}
 		repaint();
+		revalidate();
 	}
 	
 	public void solveWithVisual(int row, int column) throws Exception
@@ -482,6 +488,7 @@ public class Board extends JComponent
 		}
 		Thread.sleep(1);
 		repaint();
+		revalidate();
 	}
 	
 	public void paintComponent(Graphics g)
@@ -543,4 +550,32 @@ public class Board extends JComponent
 				}
 			}		
     }
+	
+	public void clearBoard()
+	{
+		// board itself
+		// create a new array to store the numbers in the board
+		boardArray = new int[9][9];
+		// fill the array with zeroes to initialize it
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				boardArray[i][j] = 0;
+		
+		// regions
+		// create a new array to store the regions of the board
+		boxArray = new int[9][9];
+		// creates a normal sudoku board with region 1 at the top left, region 3 at the top right, and so on. Region 9 is in the bottom right
+		for(int i = 0; i < 9; i++)
+			for(int j = 0; j < 9; j++)
+				boxArray[i][j] = (3*(i/3)) + (j/3) + 1;
+		
+		// potential
+		// create a new array to store if a number can be placed in that location
+		potentialArray = new boolean[9][9][9];
+		for(int i = 0; i < 9; i ++)
+			for(int j = 0; j < 9; j++)
+				for(int k = 0; k < 9; k++)
+					potentialArray[i][j][k] = true;
+		repaint();
+	}
 }
