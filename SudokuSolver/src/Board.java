@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -12,7 +14,7 @@ import java.awt.image.*;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class Board extends JComponent
+public class Board extends JComponent implements KeyListener
 {
 	private int[][] boardArray;
 	private int[][] boxArray;
@@ -24,6 +26,7 @@ public class Board extends JComponent
 	 *----------------------------------------------------------------------------------------------------------------*/
 	public Board(InputBox input)
 	{
+		this.addKeyListener(this);
 		this.input = input;
 		// board itself
 		// create a new array to store the numbers in the board
@@ -52,6 +55,7 @@ public class Board extends JComponent
 	
 	public Board(int[][] board, int[][] box, boolean[][][] potential)
 	{
+		this.addKeyListener(this);
 		boardArray = board;
 		boxArray = box;
 		potentialArray = potential;
@@ -577,5 +581,46 @@ public class Board extends JComponent
 				for(int k = 0; k < 9; k++)
 					potentialArray[i][j][k] = true;
 		repaint();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		int keyCode = e.getKeyCode();
+		switch (keyCode)
+		{
+		case KeyEvent.VK_1: 
+			Board board1 = new Board(input);
+			
+			board1.placeNumber(0, 0, 9);
+			board1.placeNumber(9, 9, 9);
+			board1.placeNumber(9, 0, 1);
+			board1.placeNumber(0, 9, 1);
+			
+			SudokuSolver.clearFrame();
+			SudokuSolver.init(board1, input);
+			
+		case KeyEvent.VK_2:
+			Board board2 = new Board(input);
+			
+			board2.placeNumber(0, 0, 9);
+			board2.placeNumber(9, 9, 9);
+			board2.placeNumber(9, 0, 1);
+			board2.placeNumber(0, 9, 1);
+			
+			SudokuSolver.init(board2, input);
+		}
 	}
 }
