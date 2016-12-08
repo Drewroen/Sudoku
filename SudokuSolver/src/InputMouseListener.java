@@ -25,7 +25,7 @@ public class InputMouseListener implements MouseListener
     			if((e.getX() - 105) / 140 == 1)
     			{
 					try {
-						b.solveWithVisual(0, 0);
+						b.solve(0, 0);
 					} catch (Exception e1){}
     				b.repaint();
     			}

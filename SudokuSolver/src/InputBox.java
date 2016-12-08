@@ -13,7 +13,7 @@ public class InputBox extends JComponent
     
     public InputBox()
     {
-    	input = -1;
+    	input = 1;
     }
     
     public void paintComponent(Graphics g)

@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.*;
 
 public class SudokuSolver {
@@ -16,6 +19,7 @@ public class SudokuSolver {
 		Board b = new Board(c);
 		b.addMouseListener(new BoardMouseListener(b, c));
 		c.addMouseListener(new InputMouseListener(b, c));
+		main.addKeyListener(new HotKey(b));
 
 		b.setPreferredSize(new Dimension(630, 630));
 		c.setPreferredSize(new Dimension(630, 269));
@@ -32,4 +36,37 @@ public class SudokuSolver {
 		} catch (Exception e) {
 		}
 	}
+}
+
+class HotKey implements KeyListener
+{
+	private Board b;
+	public HotKey(Board b)
+	{
+		this.b = b;
+	}
+	
+	public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_1)
+        {
+        	b.placeNumber(0, 0, 5);
+        }
+		if (e.getKeyCode() == KeyEvent.VK_2)
+        {
+        	b.placeNumber(0, 1, 5);
+        }
+		if (e.getKeyCode() == KeyEvent.VK_3)
+        {
+        	b.placeNumber(0, 2, 5);
+        }
+		if (e.getKeyCode() == KeyEvent.VK_4)
+        {
+        	b.placeNumber(0, 3, 5);
+        }
+    }
+
+	public void keyReleased(KeyEvent arg0) {}
+
+	public void keyTyped(KeyEvent arg0) {}
 }

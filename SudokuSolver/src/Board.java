@@ -486,7 +486,7 @@ public class Board extends JComponent
 			}
 			boardArray[row][column] = 0;
 		}
-		Thread.sleep(1);
+		Thread.sleep(10);
 		repaint();
 		revalidate();
 	}
